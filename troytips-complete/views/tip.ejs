@@ -1,0 +1,35 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>Troy Tips</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheet.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1><a href="/">Troy Tips</a></h1>
+
+      <hr/>
+
+      <div class="tips">
+        <div class="tip">
+          <p class="content"><%= tip.content %></p>
+
+          <p class="details">
+            <b>
+              - <%= tip.author %><br/>
+            </b>
+
+            <a href="/tip/<%= tip._id %>" class="permalink">
+              <%= moment(tip.created).format('MMMM DD, hh:mm a') %>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

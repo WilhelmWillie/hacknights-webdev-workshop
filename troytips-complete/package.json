@@ -1,0 +1,29 @@
+{
+  "name": "troytips",
+  "version": "1.0.0",
+  "description": "Basic web dev project made for HackSC's Hack Nights",
+  "main": "server.js",
+  "scripts": {
+    "start": "npx nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WilhelmWillie/troytips.git"
+  },
+  "author": "Wilhelm Willie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WilhelmWillie/troytips/issues"
+  },
+  "homepage": "https://github.com/WilhelmWillie/troytips#readme",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.11"
+  }
+}

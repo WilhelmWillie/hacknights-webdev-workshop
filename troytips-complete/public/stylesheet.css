@@ -1,0 +1,115 @@
+/* CSS for TroyTips */
+body {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  background-color: #AB1313;
+  color: #464646;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+h1 a {
+  text-decoration: none;
+  color: #1C1C1C;
+}
+
+hr {
+  height: 2px;
+  color: #D7B700;
+  background-color: #D7B700;
+  border: none;
+  width: 170px;
+}
+
+p {
+  font-weight: 300;
+  margin: 0;
+  line-height: 18px;
+}
+
+form {
+  padding: 24px 0;
+}
+
+/* Container */
+.container {
+  width: 420px;
+  padding: 48px 24px;
+  margin: 48px auto;
+  background: #F3F3F3;
+  border-radius: 4px;
+}
+
+/* New Tip Form */
+.error {
+  color: #A20808;
+  font-weight: 700;
+  margin-top: 14px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.text-input {
+  border: 1px solid #E2E2E2;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  font-size: 14px;
+  color: #464646;
+  font-weight: 300;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.content-input {
+  height: 100px;
+}
+
+.submit-input {
+  text-align: right;
+}
+
+.submit-btn {
+  background-color: #D7B700;
+  padding: 10px 24px;
+  border-radius: 5px;
+  border: none;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+
+.submit-btn:hover {
+  background-color: #EDCA00;
+}
+
+.error-msg {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 20px;
+}
+
+/* Displaying the tips */
+.tip {
+  border: 1px solid #E2E2E2;
+  padding: 14px;
+  border-radius: 5px;
+  background: #FFFFFF;
+  margin-top: 20px;
+}
+
+.tip .details {
+  text-align: right;
+  margin-top: 14px;
+  color: #1C1C1C;
+}
+
+.tip .permalink {
+  color: #9C9C9C;
+  text-decoration: none;
+  font-size:  14px;
+}

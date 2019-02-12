@@ -1,0 +1,3 @@
+# Hack Nights: Web Development Workshop
+
+Guide coming soon...
