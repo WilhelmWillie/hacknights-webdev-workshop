@@ -11,7 +11,7 @@ Today, we’ll be building `Troy Tips`, an application that lets anonymous stude
 
 At the end of this workshop and guide, I’ll provide more links and resources so you can learn more about the modern stack that a lot of developers are using today!
 
-NOTE: Before you read on, make sure to check out the slides I prepared for the workshop ( [slides link](https://docs.google.com/presentation/d/1Gp9t75kZWHF7yDz8ZwgZcHpDmXkzeKu3QYSV20GokqQ/edit?usp=sharing) )
+NOTE: Before you read on, make sure to check out the slides I prepared for the workshop ( [slides link](https://docs.google.com/presentation/d/1RY5uVyZgcW2TRz2xsWA4dn2pC6CSjA7ceVSMqXUxd-4/edit?usp=sharing) )
 
 ## Pre-requisites
 This workshop is intended for beginner developers who have some programming experience. It is recommended that you have at least taken CSCI 102 or CSCI 103 and/or know how to use your computer’s terminal.
@@ -198,13 +198,13 @@ router.post('/tip/new', (req, res) => {
   const content = req.body.content;
   const author = req.body.author;
 
-	// Add this piece of code next!
-	const tip = new Tip({
+  // Add this piece of code next!
+  const tip = new Tip({
     content: content,
     author: author
   });
 
-	tip.save(function (err) {
+  tip.save(function (err) {
     if (err) {
       return res.render('error');
     }
@@ -229,7 +229,7 @@ Let’s stay on `routes/index.js` and modify our `router.get(‘/‘)` route.
 
 Models have a variety of methods that allow us to do search operations. We’ll use a method called `.find()`
 
-Replace our `res.render(‘home’);` line with the following:
+Replace our `router.get('/');` line with the following:
 
 ```
 // Get all tips in the database
@@ -357,4 +357,112 @@ Save this file and now visit `localhost:3000`. Click on one of the gray dates ne
 So there you go! You’re now 90% done with this application. You were able to connect to a database, write to it, and read from it. What’s left now is error handling. You can now call it a day and say you’re done but I highly recommend going through error handling so you understand how to do it at a basic level.
 
 ## Error Handling (Optional)
+So we’ve coded the major functionality of our app but what happens if the user decides to be mischievous and submit an empty form? We get an error! This section will go over basic input validation and error handling.
+
+Why do we get an error? Well, we told the model that content and author are required fields. When we submit an empty Tip, we trigger a Mongoose validation error hence why we see the error page.
+
+We can add validation to the `/tip/new` so that we can gracefully handle these errors before we even touch the database!
+
+Let’s go back to `routes/index.js` and look at the POST route for `/tip/new`. Remember how we stored the content and author in separate variables?
+
+Let’s do some basic validation. Some basic rules: we want content and author to NOT be empty.. and for fun, we want the length of content to be less than 300 characters.
+
+Add these lines of code right under where we declare our content and author variables
+
+```
+  const content = req.body.content;
+  const author = req.body.author;
+
+  let error = false;
+
+  // Validate user input
+  if (content === undefined || content.trim() === '') {
+    req.flash('errors', 'Content can not be empty');
+    error = true;
+  }
+
+  if (author === undefined || author.trim() === '') {
+    req.flash('errors', 'Author can not be empty');
+    error = true;
+  }
+
+  if (content.length > 300) {
+    req.flash('errors', 'Content must be less than 300 characters');
+    error = true;
+  }
+
+  // If there is an error, redirect back to the home page
+  if (error) {
+    req.flash('content', content);
+    req.flash('author', author);
+    res.redirect('/');
+    return;
+  }
+```
+
+This is a good chunk of code so let’s go through it section by section. First we declare a flag variable called `error`. If this is true, we have encountered invalid input and will want to handle that.
+
+The next 3 if statements are self-explanatory but you’ll see a piece of code that might seem unfamiliar.. what does `req.flash()` do?
+
+Flash messages are an easy way for us to store one-time messages between the server and client. We’re essentially saying, on the next request,  make this error message available.
+
+The last `if (error)` block will redirect the user to the home page if there is an error and will prevent any further code from running.
+
+We also include the original `content` and `author` as a Flash message so if there is an error, the form will re-fill w/ the content they submitted.
+
+If you save `localhost:3000` and try submitting an empty form, you will no longer see an error page! You’ll be redirected back to the home page but you won’t see any errors… we need to write the front-end code that handles errors! Let’s get to that.
+
+### Error Handling on the Home Page
+Stay on `routes/index.js` and go to the method that handles the `router.get(‘/‘)`. Remember how we used `req.flash()` to store error messages, the content, and the author? Well, we need to send that to our template IF they exist! Let’s modify the `res.render(‘home’)` block of code by modifying it to look like the following:
+
+```
+res.render('home', {
+  tips: tips,
+  moment: moment,
+  content: req.flash('content') || '',
+  author: req.flash('author') || '',
+  errors: req.flash('errors')
+});
+```
+
+In addition to the tips data and the moment library, we’ll pass `content`, `author`, and `errors` if there are any.
+
+Now we need to modify the `views/home.ejs` template so we can use this data if there are errors. Let’s go back to `views/home.ejs`.
+
+Modify the new Tip form so that we use the `content` and `author` variables as values if they exist. We can do that by modifying the textarea and text input field like so:
+```
+<textarea class="text-input content-input" placeholder="What tip do you have?" name="content"><%= content %></textarea>
+<input type="text" placeholder="Your Name" class="text-input name-input" name="author" value="<%= author %>"/>
+```
+
+This will embed the content and author data into the form IF an error occurred. Lastly, we need to display error messages.
+
+Right under our submit button, add in the following code:
+```
+<% if (locals.errors) { %>
+  <div class="error">
+    <% for(var i = 0;i < errors.length; i++) { %>
+      <p><%= errors[i] %></p>
+    <% } %>
+  </div>
+<% } %>
+```
+
+What this does is check if error messages exist. If they do, we’ll create a new error paragraph for each error then output it.
+
+Save `views/home.ejs` and reload `localhost:3000`. Try submitting an empty form. You should see two errors! Now try submitting the form with content but no name. You should see one error and the form should be re-filled w/ the previous input!
+
+## Conclusion
+Congrats, you have built out a web application using Node.js/Express + MongoDB! Now that you have this finished code, take a look through it some more and try to extend and add to this project.
+
+Try adding in a new field to the Tip form. Try adding in another route. Try adding a deletion route that will delete a specific Tip (hint: delete is it’s own HTTP verb).
+
+This app is super basic and was a quick overview into how web dev works but hopefully you learned a bit more about how Node.js/Express works and how you can connect it with databases like MongoDB.
+
+If you’re interested in learning more about web development, I’ve attached a few great links to this guide so you can continue to learn on your own! Best of luck on your web dev journey. If you have any questions, feel free to reach out to me directly by e-mailing me at wwillie@usc.edu 
+
 ## What’s Next?
+* More on Node.js
+* More on MongoDB and Mongoose
+* More on HTML/CSS
+* More guides
