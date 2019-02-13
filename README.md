@@ -68,7 +68,7 @@ Notice the structure of the file. First we create a router variable:
 We can extend this object to handle different routes by passing in a function that takes two arguments: the request, and response. The request variable allows us to obtain any data that our user sent to our server. Response allows us to send back a message, a file, a web page, and more.
 
 Let’s look at the home page route which is very basic. This will simply display the string “all tips” when the user visits the home page.
-```
+```javascript
 router.get('/', (req, res) => {
   return res.send('all tips');
 });
@@ -79,7 +79,7 @@ We could replace this to send a file like an HTML page, an image, or even better
 Go back to `server.js`. Look for the line that says `TODO: Set up routing`. Let’s import our route file and tell our server to use that file for handling routes.
 
 To do that, we insert the following lines of code:
-```
+```javascript
 // Routing
 const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
@@ -117,7 +117,7 @@ Next, let’s start a MongoDB instance.
 
 We need to establish a connection to this database in our `server.js` file. Look for the line that says `TODO: Set up Database` . Replace that with
 
-```
+```javascript
 // Connect to database
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/troytips')
@@ -132,7 +132,7 @@ First, we need to get a reference to Mongoose, the package I referred to earlier
 
 Next, we need to define the schema for our Tip. Feel free to replace the `TODO: Define the Tip model` with the following:
 
-```
+```javascript
 // Define the Tip model
 const tipSchema = new mongoose.Schema({
   content: {
@@ -182,7 +182,7 @@ Open up `/routes/index.js`. First, we need to import the Tip model we previously
 
 Next, look for the `TODO: Create a new Tip` comment. Let’s fill out this route.
 
-```
+```javascript
 // Create a new tip
 router.post('/tip/new', (req, res) => {
   const content = req.body.content;
@@ -192,7 +192,7 @@ router.post('/tip/new', (req, res) => {
 
 Remember how we added `name` attributes to our inputs? We can access that through the req (request) variable! It will be passed to us via the body variable. We’ll store these values into separate variables so we can do error handling and validation later. Next, we need to create a new Tip object and try to save it to our data base.
 
-```
+```javascript
 // Create a new tip
 router.post('/tip/new', (req, res) => {
   const content = req.body.content;
@@ -231,7 +231,7 @@ Models have a variety of methods that allow us to do search operations. We’ll 
 
 Replace our `router.get('/');` line with the following:
 
-```
+```javascript
 // Get all tips in the database
 router.get('/', (req, res) => {
   Tip.find({}, null, {sort: {created: -1}}, function (err, tips) {
@@ -263,7 +263,7 @@ If you save this file and access `localhost:3000`, nothing will update visually 
 
 In our `views/home.ejs` file, find the `TODO: Display tips` line. I created the basic HTML structure for the Tip object but now we need to make it so that it’s dynamic. Replace the entire `<div class=“tips”></div>` section with the following:
 
-```
+```html
 <div class="tips">
   <% for(var i = 0; i < tips.length; i++) { %>
     <div class="tip">
@@ -304,7 +304,7 @@ Example: `localhost:3000/tip/ABC` -> req.params.id == ‘ABC’
 In our case, this `:id` will be the unique ID corresponding to a single Tip. Whenever we insert a document into our Mongo database, it receives a unique ID. Mongoose includes a nifty method for models called `findById()`. We’ll use this so we can create a permalink route that allows us to see a specific tip via a URL.
 
 Now, let’s fill in that route! Replace the current `router.get(‘/tip/:id’)` code with the following:
-```
+```javascript
 // View a single tip
 router.get('/tip/:id', (req, res) => {
   Tip.findById(req.params.id, function (err, tip) {
@@ -336,7 +336,7 @@ Right now the HTML is static but let’s update it so that it’s dynamic.
 * Set the href attribute of the permalink to `/tip/<%= tip._id %>`
 
 The end result HTML of `<div class=“tip”>` should look like:
-```
+```html
 <div class="tip">
   <p class="content"><%= tip.content %></p>
 
@@ -369,7 +369,7 @@ Let’s do some basic validation. Some basic rules: we want content and author t
 
 Add these lines of code right under where we declare our content and author variables
 
-```
+```javascript
   const content = req.body.content;
   const author = req.body.author;
 
@@ -415,7 +415,7 @@ If you save `localhost:3000` and try submitting an empty form, you will no longe
 ### Error Handling on the Home Page
 Stay on `routes/index.js` and go to the method that handles the `router.get(‘/‘)`. Remember how we used `req.flash()` to store error messages, the content, and the author? Well, we need to send that to our template IF they exist! Let’s modify the `res.render(‘home’)` block of code by modifying it to look like the following:
 
-```
+```javascript
 res.render('home', {
   tips: tips,
   moment: moment,
@@ -430,7 +430,7 @@ In addition to the tips data and the moment library, we’ll pass `content`, `au
 Now we need to modify the `views/home.ejs` template so we can use this data if there are errors. Let’s go back to `views/home.ejs`.
 
 Modify the new Tip form so that we use the `content` and `author` variables as values if they exist. We can do that by modifying the textarea and text input field like so:
-```
+```html
 <textarea class="text-input content-input" placeholder="What tip do you have?" name="content"><%= content %></textarea>
 <input type="text" placeholder="Your Name" class="text-input name-input" name="author" value="<%= author %>"/>
 ```
@@ -438,7 +438,7 @@ Modify the new Tip form so that we use the `content` and `author` variables as v
 This will embed the content and author data into the form IF an error occurred. Lastly, we need to display error messages.
 
 Right under our submit button, add in the following code:
-```
+```html
 <% if (locals.errors) { %>
   <div class="error">
     <% for(var i = 0;i < errors.length; i++) { %>
