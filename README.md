@@ -459,10 +459,23 @@ Try adding in a new field to the Tip form. Try adding in another route. Try addi
 
 This app is super basic and was a quick overview into how web dev works but hopefully you learned a bit more about how Node.js/Express works and how you can connect it with databases like MongoDB.
 
-If you’re interested in learning more about web development, I’ve attached a few great links to this guide so you can continue to learn on your own! Best of luck on your web dev journey. If you have any questions, feel free to reach out to me directly by e-mailing me at wwillie@usc.edu 
+If you’re interested in learning more about web development, I’ve attached a few great links to this guide so you can continue to learn on your own! Best of luck on your web dev journey. If you have any questions, feel free to reach out to me directly by e-mailing me at wwillie@usc.edu
 
 ## What’s Next?
-* More on Node.js
-* More on MongoDB and Mongoose
-* More on HTML/CSS
-* More guides
+* More on MongoDB and Mongoose - Learn more about MongoDB and what Mongoose can do
+	* [Mongoose v5.4.11: API docs](https://mongoosejs.com/docs/api.html)
+	* [Introduction to Mongoose for MongoDB – freeCodeCamp.org](https://medium.freecodecamp.org/introduction-to-mongoose-for-mongodb-d2a7aa593c57)
+* Callback Functions - I talked about them briefly. Learn more about them via this article
+	* [Understand JavaScript Callback Functions and Use Them | JavaScript Is Sexy](https://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/)
+* More guides - Want more thorough help learning Node.js and Express? Check out these guides found from the internet
+	* [The only NodeJs introduction you’ll ever need. – codeburst](https://codeburst.io/the-only-nodejs-introduction-youll-ever-need-d969a47ef219)
+	* [Introduction to Express, a practical tutorial](https://flaviocopes.com/express/)
+	* [Writing a CRUD app with Node.js and MongoDB – codeburst](https://codeburst.io/writing-a-crud-app-with-node-js-and-mongodb-e0827cbbdafb)
+* Front-end Toolkits (HTML/CSS) - Want to make your front-ends look a bit nicer? Or don’t want to spend too much time writing CSS? Check out these toolkits that will make front-end development easier.
+	* [Bootstrap · The most popular HTML, CSS, and JS library in the world.](https://getbootstrap.com/)
+	* [Bulma: Free, open source, & modern CSS framework based on Flexbox](https://bulma.io/)
+	* [The most advanced responsive front-end framework in the world. | Foundation](https://foundation.zurb.com/)
+* Javascript Frameworks - Build more complex front-ends! Definitely levels above what was introduced in this workshop but here are the big three front-end frameworks developers are using today.
+	* [Angular Docs](https://angular.io/)
+	* [React – A JavaScript library for building user interfaces](https://reactjs.org/)
+	* [Vue.js](https://vuejs.org/)
