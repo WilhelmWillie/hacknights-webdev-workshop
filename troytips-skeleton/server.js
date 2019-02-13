@@ -18,9 +18,7 @@ app.use(session({
 
 app.use(flash());
 
-// Connect to database
-const mongoose = require('mongoose')
-mongoose.connect(process.env.DATABASE || 'mongodb://localhost/troytips')
+// TODO: Set up Database
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,8 +29,6 @@ app.use(express.urlencoded({ extended: false }));
 // Set static library to be our public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routing
-const indexRouter = require('./routes/index');
-app.use('/', indexRouter);
+// TODO: Set up routing
 
 app.listen(process.env.PORT || 3000, () => console.log('Launching our app on port 3000 🚀'));

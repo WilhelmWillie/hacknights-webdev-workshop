@@ -15,43 +15,37 @@
 
       <hr/>
 
-      <form method="POST" action="/tip/new">
-        <textarea class="text-input content-input" placeholder="What tip do you have?" name="content"><%= content %></textarea>
-        <input type="text" placeholder="Your Name" class="text-input name-input" name="author" value="<%= author %>"/>
+      <!-- TODO: Fix form -->
+      <form>
+        <textarea class="text-input content-input" placeholder="What tip do you have?"></textarea>
+        <input type="text" placeholder="Your Name" class="text-input name-input"/>
 
         <div class="submit-input">
           <input type="submit" class="submit-btn"/>
         </div>
 
-        <% if (locals.errors) { %>
-          <div class="error">
-            <% for(var i = 0;i < errors.length; i++) { %>
-              <p><%= errors[i] %></p>
-            <% } %>
-          </div>
-        <% } %>
+        <!-- TODO: Errors -->
       </form>
 
       <hr/>
 
       <div class="tips">
-        <% for(var i = 0; i < tips.length; i++) { %>
-          <div class="tip">
-              <p class="content"><%= tips[i].content %></p>
+        <!-- TODO: Display tips -->
+        <div class="tip">
+            <p class="content">Lorem ipsum dolor sit amet consectetur adipiscing elit...</p>
 
-              <p class="details">
-                <b>
-                  - <%= tips[i].author %>
-                </b>
+            <p class="details">
+              <b>
+                - Anonymous
+              </b>
 
-                <br/>
+              <br/>
 
-                <a href="/tip/<%= tips[i]._id %>" class="permalink">
-                  <%= moment(tips[i].created).format('MMMM DD, hh:mm a') %>
-                </a>
-              </p>
-          </div>
-        <% } %>
+              <a href="/tip/<%= tips[i]._id %>" class="permalink">
+                February 13, 12:45 pm
+              </a>
+            </p>
+        </div>
       </div>
     </div>
   </body>
